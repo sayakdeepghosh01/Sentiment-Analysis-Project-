@@ -1,0 +1,184 @@
+<!-- app/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s;
+        }
+
+        #container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        h1 {
+            color: #3498db;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #sentimentForm {
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        #brandHeading {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #brandHeading h2 {
+            color: #e74c3c; /* Red Color */
+            display: inline;
+            margin-right: 10px;
+        }
+
+        #brandHeading h2.grey {
+            color: #555; /* Grey Color */
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #reasons {
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #positiveReasons,
+        #negativeReasons {
+            margin-top: 10px;
+        }
+
+        .score-reason {
+            margin-bottom: 5px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="brandHeading">
+            <h2>Telaverge</h2>
+            <h2 class="grey">Communications</h2>
+        </div>
+    <div id="container">
+        <h1>Sentiment Analysis</h1>
+        
+        <form id="sentimentForm">
+            <label for="comment">Enter Text or URL:</label>
+            <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+            <button type="button" onclick="analyzeSentiment()">Analyze Sentiment</button>
+        </form>
+
+        <div id="result"></div>
+
+        <div id="reasons">
+            <h2>Top 5 Reasons:</h2>
+            <div id="positiveReasons" class="reason"></div>
+            <div id="negativeReasons" class="reason"></div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeSentiment() {
+            var comment = document.getElementById('comment').value;
+            fetch('/analyze_sentiment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: comment }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('sentimentForm').reset();
+                displayResult(data.sentiment_score, data.sentiment_label);
+                displayScoreDetails(data.score_details);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function displayResult(sentimentScore, sentimentLabel) {
+            var resultElement = document.getElementById('result');
+            resultElement.innerHTML = `<strong>Result:</strong> Sentiment: ${sentimentLabel}, Score: ${sentimentScore.toFixed(2)}`;
+        }
+
+        function displayScoreDetails(scoreDetails) {
+            var positiveReasons = document.getElementById('positiveReasons');
+            var negativeReasons = document.getElementById('negativeReasons');
+
+            positiveReasons.innerHTML = '<strong>Reasons for Score Increment:</strong>';
+            negativeReasons.innerHTML = '<strong>Reasons for Score Decrement:</strong>';
+
+            // Display reasons for score increment
+            scoreDetails.increment.forEach(function (reason, index) {
+                positiveReasons.innerHTML += `<div class="score-reason">${index + 1}. ${reason}</div>`;
+            });
+
+            // Display reasons for score decrement
+            scoreDetails.decrement.forEach(function (reason, index) {
+                negativeReasons.innerHTML += `<div class="score-reason">${index + 1}. ${reason}</div>`;
+            });
+        }
+    </script>
+
+</body>
+</html>
