@@ -105,13 +105,14 @@ impacttheaccuracyofsentimentscores.
 BelowarescreenshotsshowcasingtheSentimentAnalysiswebapplication:
 
 
-[Negative Score]([https://assets.digitalocean.com/articles/alligator/boo.svg "a title](https://github.com/sayakdeepghosh01/Sentiment-Analysis-Project-/blob/main/neg.png)")
+
+![Negative Score]([https://assets.digitalocean.com/articles/alligator/boo.svg "a title](https://github.com/sayakdeepghosh01/Sentiment-Analysis-Project-/blob/main/neg.png)")
 ## Figure1:NegativeScore
 
 
-[Positive_Score]([https://assets.digitalocean.com/articles/alligator/boo.svg "a title](https://github.com/sayakdeepghosh01/Sentiment-Analysis-Project-/blob/main/pos.png)")
+![Positive_Score]([https://assets.digitalocean.com/articles/alligator/boo.svg "a title](https://github.com/sayakdeepghosh01/Sentiment-Analysis-Project-/blob/main/pos.png)")
 ## Figure2:PositiveScore
-[Neutral Score]([https://assets.digitalocean.com/articles/alligator/boo.svg "a title](https://github.com/sayakdeepghosh01/Sentiment-Analysis-Project-/blob/main/neu.png)")
+![Neutral Score]([https://assets.digitalocean.com/articles/alligator/boo.svg "a title](https://github.com/sayakdeepghosh01/Sentiment-Analysis-Project-/blob/main/neu.png)")
 ## Figure3:NeutralScore(onaLinkedinprofile)
 
 
